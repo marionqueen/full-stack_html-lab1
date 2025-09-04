@@ -1,22 +1,35 @@
 export const employeeData = {
   "departments": {
     "Administration": [
-      "Jeff Bezos",
-      "Bill Gates",
-      "Warren Buffet"
+      "Zoe Robins",
+      "Madeleine Madden"
     ],
     "Audit": [
-      "Al Capone",
-      "John Dillinger",
-      "Bonnie Parker",
-      
+      "Josha Sadowski",
+      "Kate Fleetwood"
+       
     ],
-    "BankingOperations": [
-      "Simon Cowell",
-      "Sofia Vergara",
-      "Madelaine Petsch",
-      "Billie Eilish"
-
+    "Banking Operations": [
+      "Priyanka Bose",
+      "Hammed Animashaun",
+      "Alvaro Morte",
+      "Taylor Napier",
+      "Alan Simmonds"
+    ],
+    "Communications": [
+      "Gil Cardinal",
+      "Richard J. Lewis"
+    ],
+    "Corporate Services": [
+      "Randy Bradshaw",
+      "Tracy Cook",
+      "Lubomir Mykytiuk"
+    ],
+    "Facilities": [
+      "Dakota House",
+      "Lori Lea Okemah",
+      "Rene Morrisseau",
+      "Rick Balcourt"
     ]
   }
 }
