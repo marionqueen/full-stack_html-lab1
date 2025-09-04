@@ -1,0 +1,22 @@
+export const employeeData = {
+  "departments": {
+    "Administration": [
+      "Jeff Bezos",
+      "Bill Gates",
+      "Warren Buffet"
+    ],
+    "Audit": [
+      "Al Capone",
+      "John Dillinger",
+      "Bonnie Parker",
+      
+    ],
+    "BankingOperations": [
+      "Simon Cowell",
+      "Sofia Vergara",
+      "Madelaine Petsch",
+      "Billie Eilish"
+
+    ]
+  }
+}
