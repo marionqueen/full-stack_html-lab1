@@ -1,5 +1,6 @@
 // src/components/Nav.tsx
 import React from 'react';
+import { Link } from 'react-router';
 
 const Nav: React.FC = () => {
   return (
@@ -9,8 +10,8 @@ const Nav: React.FC = () => {
           <img src="/Pixell.png" alt="Pixell River Financial Logo" className="logo" />
         </div>
         <ul className="nav-links">
-          <li><a href="#employees">Employees</a></li>
-          <li><a href="#organization">Organization</a></li>
+          <li><Link to="/employees">Employees</Link></li>
+          <li><Link to="/organization">Organization</Link></li>
         </ul>
       </div>
     </nav>
