@@ -4,43 +4,14 @@ import { employeeData } from '../data/employee_data';
 const EmployeeDirectory: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Function to filter employees
-  const filterEmployees = () => {
-    if (!searchTerm) {
-      return employeeData.departments;
-    }
-
-    const filtered: { [key: string]: string[] } = {};
-    
-    Object.entries(employeeData.departments).forEach(([department, employees]) => {
-      // Dept Name = Search?
-      if (department.toLowerCase().includes(searchTerm.toLowerCase())) {
-        filtered[department] = employees;
-      } else {
-        // Individual Employee = Match?
-        const matchingEmployees = employees.filter(employee =>
-          employee.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        if (matchingEmployees.length > 0) {
-          filtered[department] = matchingEmployees;
-        }
-      }
-    });
-
-    return filtered;
-  };
-
-  const filteredDepartments = filterEmployees();
-
   return (
     <div>
       <h2>Employee Directory</h2>
-      
-      {/* Search Bar */}
+      Please enter employee name or department to search:
+      {/* search bar */}
       <div style={{ marginBottom: '20px' }}>
         <input
           type="text"
-          placeholder="Search by name or department..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
@@ -54,20 +25,28 @@ const EmployeeDirectory: React.FC = () => {
       </div>
 
       <section>
-        {Object.keys(filteredDepartments).length === 0 ? (
-          <p>No employees found matching "{searchTerm}"</p>
-        ) : (
-          Object.entries(filteredDepartments).map(([department, employees]) => (
-            <div key={department} className="departments-employees">
-              <h4>{department}</h4>
-              <ul>
-                {employees.map((employee, index) => (
-                  <li key={index}>{employee}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        )}
+        {Object.entries(employeeData.departments).map(([department, employees]) => {
+          // Simple filtering - only show employees that match search
+          const filteredEmployees = employees.filter(employee =>
+            employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            department.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+
+          // Only show department if it has matching employees or empty search
+          if (filteredEmployees.length > 0 || searchTerm === '') {
+            return (
+              <div key={department} className="departments-employees">
+                <h4>{department}</h4>
+                <ul>
+                  {(searchTerm === '' ? employees : filteredEmployees).map((employee, index) => (
+                    <li key={index}>{employee}</li>
+                  ))}
+                </ul>
+              </div>
+            );
+          }
+          return null;
+        })}
       </section>
     </div>
   );

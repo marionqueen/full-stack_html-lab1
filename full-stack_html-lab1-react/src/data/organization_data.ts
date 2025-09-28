@@ -1,6 +1,7 @@
 // Leadership and Management data from pages 15-16
 export const organizationData = {
-  
+
+    //descriptions of Roles have been taken from Appendix B of Pixel River Case Study document
     "leadership": {
     "Executive": [
       {
