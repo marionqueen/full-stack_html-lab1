@@ -18,10 +18,10 @@ export async function addLeader(leader: Leader) {
   const existingIndex = leaders.findIndex(l => l.role === leader.role);
   
   if (existingIndex !== -1) {
-    // UPDATE existing role
+    // update existing role in data, mock tests need to be done in organization_data
     leaders[existingIndex] = leader;
   } else {
-    // ADD new role
+    // add new role
     leaders.push(leader);
   }
   

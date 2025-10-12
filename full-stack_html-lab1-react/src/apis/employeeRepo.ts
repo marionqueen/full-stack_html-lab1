@@ -1,7 +1,7 @@
 import { employeeData } from '../data/employee_data';
 import type { Employee } from '../types/employee';
 
-// Transform the string-based data to Employee objects with department
+// data to object transformation
 let employees: Employee[] = Object.entries(employeeData.departments).flatMap(
   ([deptName, empNames]) => 
     empNames.map(name => ({ 
