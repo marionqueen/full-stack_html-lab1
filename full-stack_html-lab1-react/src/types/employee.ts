@@ -1,14 +1,15 @@
 export interface Employee {
   name: string;
+  department: string;
 }
 
 export interface Department {
   name: string;
-  employees: Employee[];
+  employees: string[];
 }
 
 export interface EmployeeData {
   departments: {
-    [key: string]: Employee[];
+    [key: string]: string[];
   };
 }
