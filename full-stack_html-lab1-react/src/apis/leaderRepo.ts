@@ -14,7 +14,17 @@ export async function getLeaders() {
 }
 
 export async function addLeader(leader: Leader) {
-  leaders.push(leader);
+  // Find if role already exists
+  const existingIndex = leaders.findIndex(l => l.role === leader.role);
+  
+  if (existingIndex !== -1) {
+    // UPDATE existing role
+    leaders[existingIndex] = leader;
+  } else {
+    // ADD new role
+    leaders.push(leader);
+  }
+  
   return leader;
 }
 
