@@ -1,12 +1,13 @@
-import employeeData from '../data/employee_data';
+import { employeeData } from '../data/employee_data';
 import type { Employee } from '../types/employee';
 
-// flatten the data structure
-let employees: Employee[] = employeeData.flatMap(dept => 
-  dept.employees.map(name => ({ 
-    name, 
-    department: dept.department 
-  }))
+// Transform the string-based data to Employee objects with department
+let employees: Employee[] = Object.entries(employeeData.departments).flatMap(
+  ([deptName, empNames]) => 
+    empNames.map(name => ({ 
+      name, 
+      department: deptName 
+    }))
 );
 
 export async function getEmployees() {
@@ -19,13 +20,7 @@ export async function addEmployee(employee: Employee) {
 }
 
 export function getDepartments() {
-  let depts: string[] = [];
-  employees.forEach(e => {
-    if (!depts.includes(e.department)) {
-      depts.push(e.department);
-    }
-  });
-  return depts;
+  return Object.keys(employeeData.departments);
 }
 
 export function searchEmployees(query: string) {
