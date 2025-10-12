@@ -5,7 +5,7 @@ export const organizationData = {
     "leadership": {
     "Executive": [
       {
-        "name": "Jo-Anne Sinclair",
+        "name": "",
         "role": "CEO/Chair of Board",
         "description": "Chief executive officer, the highest-ranking person in a company or other institution, ultimately responsible for making managerial decisions."
       },
@@ -15,14 +15,14 @@ export const organizationData = {
         "description": "The chief operating officer (COO) is responsible for executing and implementing the operational directives set by the CEO and the board of directors."
       },
       {
-        "name": "Susan Thomas",
+        "name": "",
         "role": "CFO/VP Administration", 
         "description": "A chief financial officer, a senior executive with responsibility for the financial affairs of a corporation or other institution. The vice president of administration position is responsible for directing all of the administrative functions of the corporation."
       }
     ],
     "Technology": [
       {
-        "name": "Josee Benjamin",
+        "name": "",
         "role": "CIO",
         "description": "Chief Information Officer (CIO), chief digital information officer (CDIO) or information technology (IT) director is a job title commonly given to the most senior executive in an bank responsible for the traditional information technology and computer systems that support bank goals."
       },
