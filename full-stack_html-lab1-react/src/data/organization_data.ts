@@ -5,7 +5,7 @@ export const organizationData = {
     "leadership": {
     "Executive": [
       {
-        "name": "Jo-Anne Sinclair",
+        "name": "",
         "role": "CEO/Chair of Board",
         "description": "Chief executive officer, the highest-ranking person in a company or other institution, ultimately responsible for making managerial decisions."
       },

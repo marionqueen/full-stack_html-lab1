@@ -14,7 +14,7 @@ export function validateLeader(role: string, name: string, description: string) 
   const validationErrors = new Map<string, string>();
   
   const existing = leaderRepo.getLeaderByRole(role);
-  if (existing) {
+  if (existing && existing.name.trim() !== '') {  
     validationErrors.set('role', 'This role is already filled');
   }
   
