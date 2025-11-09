@@ -1,41 +1,33 @@
-import { organizationData } from '../data/organization_data';
 import type { Leader } from '../types/organization';
 
-let leaders: Leader[] = Object.values(organizationData.leadership).flatMap(
-  departmentLeaders => departmentLeaders.map(leader => ({
-    role: leader.role,
-    name: leader.name,
-    description: leader.description
-  }))
-);
+const API_URL = 'http://localhost:3001/api';
 
-export async function getLeaders() {
-  return leaders;
+export async function getLeaders(): Promise<Leader[]> {
+  const response = await fetch(`${API_URL}/leaders`);
+  if (!response.ok) throw new Error('Failed to fetch leaders');
+  return response.json();
 }
 
-export async function addLeader(leader: Leader) {
-  // Find if role already exists
-  const existingIndex = leaders.findIndex(l => l.role === leader.role);
-  
-  if (existingIndex !== -1) {
-    // update existing role in data, mock tests need to be done in organization_data
-    leaders[existingIndex] = leader;
-  } else {
-    // add new role
-    leaders.push(leader);
+export async function addLeader(leader: Omit<Leader, 'id'>): Promise<Leader> {
+  const response = await fetch(`${API_URL}/leaders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(leader)
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to create leader');
   }
-  
-  return leader;
+  return response.json();
 }
 
-export function getLeaderByRole(role: string) {
-  return leaders.find(l => l.role.toLowerCase() === role.toLowerCase());
+export function getLeaderByRole(_role: string): Promise<Leader | undefined> {
+  // Backend handles validation now
+  return Promise.resolve(undefined);
 }
 
-export function searchLeaders(query: string) {
-  const lower = query.toLowerCase();
-  return leaders.filter(l => 
-    l.role.toLowerCase().includes(lower) || 
-    l.name.toLowerCase().includes(lower)
-  );
+export async function searchLeaders(query: string): Promise<Leader[]> {
+  const response = await fetch(`${API_URL}/leaders?search=${encodeURIComponent(query)}`);
+  if (!response.ok) throw new Error('Failed to search leaders');
+  return response.json();
 }
