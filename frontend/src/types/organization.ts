@@ -1,11 +1,6 @@
 export interface Leader {
-  name: string;
+  id: number;
   role: string;
+  name: string;
   description: string;
-}
-
-export interface OrganizationData {
-  leadership: {
-    [key: string]: Leader[];
-  };
 }

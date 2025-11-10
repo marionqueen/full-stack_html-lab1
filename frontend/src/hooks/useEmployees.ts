@@ -1,32 +1,53 @@
-import { useEffect, useState, useMemo } from 'react';
-import * as EmployeeService from '../services/employeeService';
+import { useState, useEffect } from 'react';
 import * as employeeRepo from '../apis/employeeRepo';
 import type { Employee } from '../types/employee';
 
 export function useEmployees() {
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [departments, setDepartments] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const fetchEmployees = async () => {
-    const result = await EmployeeService.fetchEmployees();
-    setEmployees(result);
+    try {
+      const data = await employeeRepo.getEmployees();
+      setEmployees(data);
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+    }
   };
-  
-  const filteredEmployees = useMemo(() => {
-    if (!searchTerm) return employees;
-    return employeeRepo.searchEmployees(searchTerm);
-  }, [employees, searchTerm]);
-  
-  const departments = useMemo(() => {
-    return employeeRepo.getDepartments();
-  }, [employees]);
-  
+
+  const fetchDepartments = async () => {
+    try {
+      const data = await employeeRepo.getDepartments();
+      setDepartments(data);
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+    }
+  };
+
   useEffect(() => {
     fetchEmployees();
+    fetchDepartments();
   }, []);
-  
+
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      fetchEmployees();
+    } else {
+      const searchAsync = async () => {
+        try {
+          const filtered = await employeeRepo.searchEmployees(searchTerm);
+          setEmployees(filtered);
+        } catch (error) {
+          console.error('Error searching:', error);
+        }
+      };
+      searchAsync();
+    }
+  }, [searchTerm]);
+
   return {
-    employees: filteredEmployees,
+    employees,
     departments,
     searchTerm,
     setSearchTerm,

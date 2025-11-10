@@ -1,28 +1,42 @@
-import { useEffect, useState, useMemo } from 'react';
-import * as LeaderService from '../services/leaderService';
+import { useState, useEffect } from 'react';
 import * as leaderRepo from '../apis/leaderRepo';
 import type { Leader } from '../types/organization';
 
 export function useLeaders() {
   const [leaders, setLeaders] = useState<Leader[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const fetchLeaders = async () => {
-    const result = await LeaderService.fetchLeaders();
-    setLeaders(result);
+    try {
+      const data = await leaderRepo.getLeaders();
+      setLeaders(data);
+    } catch (error) {
+      console.error('Error fetching leaders:', error);
+    }
   };
-  
-  const filteredLeaders = useMemo(() => {
-    if (!searchTerm) return leaders;
-    return leaderRepo.searchLeaders(searchTerm);
-  }, [leaders, searchTerm]);
-  
+
   useEffect(() => {
     fetchLeaders();
   }, []);
-  
+
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      fetchLeaders();
+    } else {
+      const searchAsync = async () => {
+        try {
+          const filtered = await leaderRepo.searchLeaders(searchTerm);
+          setLeaders(filtered);
+        } catch (error) {
+          console.error('Error searching leaders:', error);
+        }
+      };
+      searchAsync();
+    }
+  }, [searchTerm]);
+
   return {
-    leaders: filteredLeaders,
+    leaders,
     searchTerm,
     setSearchTerm,
     fetchLeaders
