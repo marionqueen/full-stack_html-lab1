@@ -10,10 +10,10 @@ export async function createLeader(leader: Leader) {
   return await leaderRepo.addLeader(leader);
 }
 
-export function validateLeader(role: string, name: string, description: string) {
+export async function validateLeader(role: string, name: string, description: string) {
   const validationErrors = new Map<string, string>();
   
-  const existing = leaderRepo.getLeaderByRole(role);
+  const existing = await leaderRepo.getLeaderByRole(role);
   if (existing && existing.name.trim() !== '') {  
     validationErrors.set('role', 'This role is already filled');
   }

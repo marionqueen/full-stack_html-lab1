@@ -14,10 +14,10 @@ export function useEntryForm() {
     return validationErrors.size === 0;
   };
   
-  const validateLeader = () => {
+  const validateLeader = async () => {
     const validationErrors = LeaderService.validateLeader(selected, name, description);
-    setErrors(validationErrors);
-    return validationErrors.size === 0;
+    setErrors(await validationErrors);
+    return (await validationErrors).size === 0;
   };
   
   const reset = () => {
