@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useAuth } from '@clerk/clerk-react';
 import { useLeaders } from '../hooks/useLeaders';
 import { useEntryForm } from '../hooks/useEntryForm';
 import * as LeaderService from '../services/leaderService';
+import * as leaderRepo from '../apis/leaderRepo';
 
 function Organization() {
+  const { getToken } = useAuth();
   const { leaders, searchTerm, setSearchTerm, fetchLeaders } = useLeaders();
   const form = useEntryForm();
   
@@ -12,14 +15,19 @@ function Organization() {
       return;
     }
     
-    await LeaderService.createLeader({
-      role: form.selected,
-      name: form.name,
-      description: form.description
-    });
-    
-    await fetchLeaders();
-    form.reset();
+    try {
+      const token = await getToken();
+      await leaderRepo.addLeader({
+        role: form.selected,
+        name: form.name,
+        description: form.description
+      }, token || undefined);
+      
+      await fetchLeaders();
+      form.reset();
+    } catch (error) {
+      console.error('Error adding leader:', error);
+    }
   };
   
   const availableRoles = leaders.map(l => l.role);

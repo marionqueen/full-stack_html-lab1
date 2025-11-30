@@ -18,6 +18,7 @@ app.use(
 );
 app.use(express.json());
 
+// Routes
 app.use('/api/employees', employeeRoutes);
 app.use('/api/leaders', leaderRoutes);
 
