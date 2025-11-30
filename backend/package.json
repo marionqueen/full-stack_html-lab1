@@ -16,6 +16,7 @@
   "author": "Marion Queen Ramos",
   "license": "ISC",
   "dependencies": {
+    "@clerk/express": "^1.7.53",
     "@prisma/client": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",

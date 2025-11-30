@@ -1,20 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import { UserButton } from '@clerk/clerk-react';
 
-const Nav: React.FC = () => {
+function Nav() {
   return (
     <nav className="nav">
-      <div className="nav-container">
-        <div className="logo-section">
-          <img src="/Pixell.png" alt="Pixell River Financial Logo" className="logo" />
-        </div>
-        <ul className="nav-links">
-          <li><Link to="/employees">Employees</Link></li>
-          <li><Link to="/organization">Organization</Link></li>
-        </ul>
+      <div className="nav-logo">
+        <img src="/Pixell.png" alt="Pixell River Financial" />
+      </div>
+      <div className="nav-links">
+        <Link to="/employees">Employees</Link>
+        <Link to="/organization">Organization</Link>
+        <UserButton afterSignOutUrl="/" />
       </div>
     </nav>
   );
-};
+}
 
 export default Nav;

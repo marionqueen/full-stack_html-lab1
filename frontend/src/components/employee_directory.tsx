@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useAuth } from '@clerk/clerk-react';
 import { useEmployees } from '../hooks/useEmployees';
 import { useEntryForm } from '../hooks/useEntryForm';
 import * as EmployeeService from '../services/employeeService';
+import * as employeeRepo from '../apis/employeeRepo';
 
 function EmployeeDirectory() {
+  const { getToken } = useAuth();
   const { employees, departments, searchTerm, setSearchTerm, fetchEmployees } = useEmployees();
   const form = useEntryForm();
   const [errors, setErrors] = useState<Map<string, string>>(new Map());
@@ -16,14 +19,19 @@ function EmployeeDirectory() {
       return;
     }
     
-    await EmployeeService.createEmployee({
-      name: form.name,
-      department: form.selected
-    });
-    
-    await fetchEmployees();
-    form.reset();
-    setErrors(new Map());
+    try {
+      const token = await getToken();
+      await employeeRepo.addEmployee({
+        name: form.name,
+        department: form.selected
+      }, token || undefined);
+      
+      await fetchEmployees();
+      form.reset();
+      setErrors(new Map());
+    } catch (error) {
+      console.error('Error adding employee:', error);
+    }
   };
   
   return (
