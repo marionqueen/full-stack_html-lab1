@@ -1,22 +1,24 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { clerkMiddleware } from '@clerk/express';
 import employeeRoutes from './routes/employeeRoutes';
 import leaderRoutes from './routes/leaderRoutes';
 
 dotenv.config();
 
 const app = express();
-const PORT = parseInt(process.env.PORT || '3001', 10);
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:5176'], // allow both just in case
-    credentials: false
+    origin: ['http://localhost:5173', 'http://localhost:5176'],
+    credentials: true
   })
 );
 app.use(express.json());
+app.use(clerkMiddleware());
 
 // Routes
 app.use('/api/employees', employeeRoutes);
@@ -28,6 +30,6 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
