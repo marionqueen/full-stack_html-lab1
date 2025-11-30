@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { SignedIn, SignedOut, RedirectToSignIn, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 import Nav from './components/nav';
 import Header from './components/header';
 import Footer from './components/footer';
