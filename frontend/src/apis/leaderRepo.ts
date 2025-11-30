@@ -39,7 +39,7 @@ export async function addLeader(leader: Omit<Leader, 'id'>, token?: string): Pro
   return response.json();
 }
 
-export function getLeaderByRole(role: string): Promise<Leader | undefined> {
+export function getLeaderByRole(_role: string): Promise<Leader | undefined> {
   // Backend handles validation now
   return Promise.resolve(undefined);
 }
