@@ -1,17 +1,43 @@
+import { useAuth } from '@clerk/clerk-react';
 import type { Employee } from '../types/employee';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
-export async function getEmployees(): Promise<Employee[]> {
-  const response = await fetch(`${API_URL}/employees`);
+async function getAuthHeaders() {
+  // This will be called from a component with useAuth
+  return {
+    'Content-Type': 'application/json'
+  };
+}
+
+export async function getEmployees(token?: string): Promise<Employee[]> {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
+  const response = await fetch(`${API_URL}/employees`, { 
+    headers,
+    credentials: 'include'
+  });
   if (!response.ok) throw new Error('Failed to fetch employees');
   return response.json();
 }
 
-export async function addEmployee(employee: Omit<Employee, 'id'>): Promise<Employee> {
+export async function addEmployee(employee: Omit<Employee, 'id'>, token?: string): Promise<Employee> {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
   const response = await fetch(`${API_URL}/employees`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
+    credentials: 'include',
     body: JSON.stringify(employee)
   });
   if (!response.ok) {
@@ -21,14 +47,34 @@ export async function addEmployee(employee: Omit<Employee, 'id'>): Promise<Emplo
   return response.json();
 }
 
-export async function getDepartments(): Promise<string[]> {
-  const response = await fetch(`${API_URL}/employees/departments`);
+export async function getDepartments(token?: string): Promise<string[]> {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
+  const response = await fetch(`${API_URL}/employees/departments`, {
+    headers,
+    credentials: 'include'
+  });
   if (!response.ok) throw new Error('Failed to fetch departments');
   return response.json();
 }
 
-export async function searchEmployees(query: string): Promise<Employee[]> {
-  const response = await fetch(`${API_URL}/employees?search=${encodeURIComponent(query)}`);
+export async function searchEmployees(query: string, token?: string): Promise<Employee[]> {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
+  const response = await fetch(`${API_URL}/employees?search=${encodeURIComponent(query)}`, {
+    headers,
+    credentials: 'include'
+  });
   if (!response.ok) throw new Error('Failed to search employees');
   return response.json();
 }
