@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { useLeaders } from '../hooks/useLeaders';
 import { useEntryForm } from '../hooks/useEntryForm';
-import * as LeaderService from '../services/leaderService';
 import * as leaderRepo from '../apis/leaderRepo';
 
 function Organization() {

@@ -1,14 +1,6 @@
-import { useAuth } from '@clerk/clerk-react';
 import type { Employee } from '../types/employee';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-
-async function getAuthHeaders() {
-  // This will be called from a component with useAuth
-  return {
-    'Content-Type': 'application/json'
-  };
-}
 
 export async function getEmployees(token?: string): Promise<Employee[]> {
   const headers: HeadersInit = {
